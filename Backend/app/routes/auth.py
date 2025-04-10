@@ -16,7 +16,8 @@ def register():
     # Register user
     try:
         user = register_user(data['username'], data['email'], data['password'])
-        access_token = create_access_token(identity=user.id)
+        access_token = create_access_token(identity=str(user.id))
+
         return success_response({
             'token': access_token,
             'user': user.to_dict()

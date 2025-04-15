@@ -1,25 +1,37 @@
+// Set item to localStorage with optional expiration (in ms).
+// If value is undefined or null, the item is removed.
+export const setToLocalStorage = (key, value, ttl = null) => {
+  if (value === undefined || value === null) {
+    localStorage.removeItem(key);
+  } else {
+    const item = {
+      value,
+      expiresAt: ttl ? Date.now() + ttl : null,
+    };
+    localStorage.setItem(key, JSON.stringify(item));
+  }
+};
+
+// Get item from localStorage and parse it safely.
+// If item is expired or invalid, return null.
 export const getFromLocalStorage = (key) => {
-    try {
-      const value = localStorage.getItem(key);
-      return value ? JSON.parse(value) : null;
-    } catch (error) {
-      console.error(`Error getting item ${key} from localStorage:`, error);
+  try {
+    const item = localStorage.getItem(key);
+
+    if (!item || item === 'undefined') {
       return null;
     }
-  };
-  
-  export const setToLocalStorage = (key, value) => {
-    try {
-      localStorage.setItem(key, JSON.stringify(value));
-    } catch (error) {
-      console.error(`Error setting item ${key} to localStorage:`, error);
-    }
-  };
-  
-  export const removeFromLocalStorage = (key) => {
-    try {
+
+    const parsed = JSON.parse(item);
+
+    if (parsed?.expiresAt && Date.now() > parsed.expiresAt) {
       localStorage.removeItem(key);
-    } catch (error) {
-      console.error(`Error removing item ${key} from localStorage:`, error);
+      return null;
     }
-  };  
+
+    return parsed.value ?? null;
+  } catch (error) {
+    console.error(`Error getting item '${key}' from localStorage:`, error);
+    return null;
+  }
+};

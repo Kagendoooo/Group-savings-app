@@ -46,16 +46,16 @@ export const AuthProvider = ({ children }) => {
       console.log('Login response.data:', response.data);
   
       // Destructure based on your backend format
-      const { user, token } = response.data.data;
+      const { user, token } = response.data;
   
       setCurrentUser(user);
   
-      if (token) {
+      if (typeof token === 'string' && token.trim()) {
         setToLocalStorage('token', token, TOKEN_TTL);
       } else {
-        console.warn('No token received from login response');
+        console.warn('Invalid or missing token:', token);
       }
-  
+      
       return response;
     } catch (err) {
       console.error('Login error:', err);

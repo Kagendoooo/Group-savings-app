@@ -9,13 +9,13 @@ import { useNotification } from '../contexts/NotificationContext';
 const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { loginUser, isAuthenticated, error: authError } = useAuth();
-  const { showError } = useNotification();
+  const { showError, showSuccess } = useNotification();
   const navigate = useNavigate();
 
+  // 🔁 Redirect if already logged in
   useEffect(() => {
-    // If already authenticated, redirect to dashboard
     if (isAuthenticated) {
-      navigate('/');
+      navigate('/dashboard');
     }
   }, [isAuthenticated, navigate]);
 
@@ -25,15 +25,17 @@ const LoginPage = () => {
     password: '',
   };
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values, actions) => {
     setIsLoading(true);
     try {
       await loginUser(values);
-      // Redirect handled by the useEffect above when isAuthenticated changes
+      showSuccess('Login successful!');
+      // ⏳ Navigation is handled by the useEffect once isAuthenticated updates
     } catch (error) {
       showError(error.message || 'Login failed');
     } finally {
       setIsLoading(false);
+      actions.setSubmitting(false); // Stops Formik loading spinner
     }
   };
 
@@ -42,7 +44,7 @@ const LoginPage = () => {
       <Box textAlign="center" mb={8}>
         <Heading>Welcome to Group Savings App</Heading>
       </Box>
-      
+
       <AuthForm
         isLogin={true}
         validationSchema={loginSchema}

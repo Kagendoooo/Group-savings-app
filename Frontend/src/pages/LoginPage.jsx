@@ -14,7 +14,9 @@ const LoginPage = () => {
 
   // 🔁 Redirect if already logged in
   useEffect(() => {
+    console.log('Authentication status:', isAuthenticated);
     if (isAuthenticated) {
+      console.log('User is authenticated, redirecting to dashboard');
       navigate('/dashboard');
     }
   }, [isAuthenticated, navigate]);

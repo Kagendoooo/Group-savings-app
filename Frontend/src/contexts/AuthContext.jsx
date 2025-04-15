@@ -12,6 +12,8 @@ export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const isAuthenticated = !!currentUser;
+
 
   // On mount, check for valid token and fetch current user
   useEffect(() => {
@@ -55,7 +57,7 @@ export const AuthProvider = ({ children }) => {
       } else {
         console.warn('Invalid or missing token:', token);
       }
-      
+
       return response;
     } catch (err) {
       console.error('Login error:', err);
@@ -100,6 +102,7 @@ export const AuthProvider = ({ children }) => {
       value={{
         currentUser,
         loginUser,
+        isAuthenticated,
         registerUser,
         logoutUser,
         error,

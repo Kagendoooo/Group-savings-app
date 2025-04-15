@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Background Circle -->
+  <circle cx="100" cy="100" r="90" fill="#3182CE" />
+  
+  <!-- Inner Circle (piggy bank body) -->
+  <circle cx="100" cy="110" r="60" fill="#ffffff" />
+  
+  <!-- Piggy Bank Ears -->
+  <circle cx="70" cy="70" r="18" fill="#ffffff" />
+  <circle cx="130" cy="70" r="18" fill="#ffffff" />
+  
+  <!-- Slot on top -->
+  <rect x="85" y="60" width="30" height="6" rx="2" fill="#3182CE" />
+  
+  <!-- Coin -->
+  <circle cx="100" cy="40" r="15" fill="#FFD700" />
+  <text x="100" y="45" font-family="Arial" font-size="18" font-weight="bold" text-anchor="middle" fill="#3182CE">$</text>
+  
+  <!-- Feet -->
+  <circle cx="75" cy="160" r="12" fill="#ffffff" />
+  <circle cx="125" cy="160" r="12" fill="#ffffff" />
+  
+  <!-- Group Text -->
+  <text x="100" y="112" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#3182CE">GROUP</text>
+  <text x="100" y="130" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#3182CE">SAVINGS</text>
+</svg>

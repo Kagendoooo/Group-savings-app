@@ -63,8 +63,6 @@ group-savings-app/
 │   │   ├── services/       # Business logic
 │   │   └── utils/          # Helper functions
 │   ├── migrations/         # Database migrations
-│   └── tests/              # Backend tests
-└── docs/                   # Project documentation
 ```
 
 ## 🚀 Getting Started

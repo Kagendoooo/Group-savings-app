@@ -1,4 +1,3 @@
-```markdown
 # Group Savings App
 
 A web application that allows users to create savings groups, contribute money, track savings, and withdraw funds. This platform helps friends, family, or colleagues pool funds together for shared financial goals.

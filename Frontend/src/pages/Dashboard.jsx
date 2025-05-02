@@ -40,10 +40,11 @@ const Dashboard = () => {
       setIsLoading(true);
       try {
         const data = await getUserGroups();
-        setGroups(groups);
+        setGroups(data);
         
-        const totalGroups = groups.length;
-        const totalSavings = groups.reduce((sum, group) => sum + parseFloat(group.current_amount || 0), 0);
+        const totalGroups = data.length;
+        const totalSavings = data.reduce((sum, group) => sum + parseFloat(group.current_amount || 0), 0);
+
         
         // No contributionsThisMonth yet – placeholder
         const contributionsThisMonth = 0;

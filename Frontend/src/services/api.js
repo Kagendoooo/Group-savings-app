@@ -24,10 +24,21 @@ api.interceptors.request.use(
 
 // Add response interceptor to handle errors
 api.interceptors.response.use(
-  (response) => response.data,
+  (response) => response.data, // Already returns response.data
   (error) => {
+    console.error('API Error:', error.response || error);
+    
+    // Check for token expiration or auth issues
+    if (error.response?.status === 401) {
+      // Let AuthContext handle this in its catch blocks
+      return Promise.reject({ 
+        message: 'Your session has expired. Please log in again.',
+        status: 401 
+      });
+    }
+    
     const message = error.response?.data?.message || 'Something went wrong';
-    return Promise.reject({ message });
+    return Promise.reject({ message, status: error.response?.status });
   }
 );
 

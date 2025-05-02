@@ -18,12 +18,12 @@ import {
 import { useAuth } from '../contexts/AuthContext';
 
 const NavBar = () => {
-  const { isAuthenticated, currentUser, logout } = useAuth();
+  const { isAuthenticated, currentUser, logoutUser } = useAuth();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    logout();
+    logoutUser();
     navigate('/login');
   };
 

@@ -40,15 +40,13 @@ const Dashboard = () => {
       setIsLoading(true);
       try {
         const data = await getUserGroups();
-        setGroups(data.groups || []);
+        setGroups(groups);
         
-        // Calculate stats
-        const totalGroups = data.groups?.length || 0;
-        const totalSavings = data.groups?.reduce((sum, group) => sum + parseFloat(group.current_amount || 0), 0) || 0;
+        const totalGroups = groups.length;
+        const totalSavings = groups.reduce((sum, group) => sum + parseFloat(group.current_amount || 0), 0);
         
-        // Calculate contributions this month (this would ideally come from the API)
-        // For now, just using a placeholder calculation
-        const contributionsThisMonth = data.total_contributions_this_month || 0;
+        // No contributionsThisMonth yet – placeholder
+        const contributionsThisMonth = 0;
         
         setStats({
           totalGroups,

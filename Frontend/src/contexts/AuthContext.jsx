@@ -42,27 +42,17 @@ export const AuthProvider = ({ children }) => {
     setError(null);
     try {
       const response = await login(credentials);
-  
       console.log('Login full response:', response);
   
-      if (
-        response &&
-        response.data &&
-        response.data.user &&
-        response.data.token
-      ) {
-        const { user, token } = response.data;
+      // 🛠️ Fix: Use response.user and response.token directly
+      const { user, token } = response;
+  
+      if (user && typeof token === 'string' && token.trim()) {
         setCurrentUser(user);
-  
-        if (typeof token === 'string' && token.trim()) {
-          setToLocalStorage('token', token, TOKEN_TTL);
-        } else {
-          console.warn('Invalid or missing token:', token);
-        }
-  
-        return response;
+        setToLocalStorage('token', token, TOKEN_TTL);
+        return { user, token }; // 👈 return standardized object
       } else {
-        throw new Error(response?.data?.message || 'Invalid login response');
+        throw new Error('Invalid login response format');
       }
     } catch (err) {
       console.error('Login error:', err);
@@ -70,7 +60,7 @@ export const AuthProvider = ({ children }) => {
       throw err;
     }
   };
-  
+    
 
   const registerUser = async (userData) => {
     setError(null);

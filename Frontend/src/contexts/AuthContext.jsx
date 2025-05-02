@@ -24,19 +24,21 @@ export const AuthProvider = ({ children }) => {
           setLoading(false);
           return;
         }
-
+  
         const user = await getCurrentUser();
         setCurrentUser(user);
       } catch (err) {
-        console.error('Error fetching current user:', err);
+        console.error('Invalid or expired token. Logging out...', err);
+        localStorage.removeItem('token'); // ✅ Clean up invalid token
         setCurrentUser(null);
       } finally {
         setLoading(false);
       }
     };
-
+  
     fetchUser();
   }, []);
+  
 
   const loginUser = async (credentials) => {
     setError(null);
@@ -87,7 +89,7 @@ export const AuthProvider = ({ children }) => {
     } catch (err) {
       console.warn('Logout failed, clearing session anyway');
     } finally {
-      setToLocalStorage('token', null);
+      localStorage.removeItem('token');
       setCurrentUser(null);
     }
   };

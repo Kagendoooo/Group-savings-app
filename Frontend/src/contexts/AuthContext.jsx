@@ -43,22 +43,27 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await login(credentials);
   
-      // Helpful logging
       console.log('Login full response:', response);
-      console.log('Login response.data:', response.data);
   
-      // Destructure based on your backend format
-      const { user, token } = response.data;
+      if (
+        response &&
+        response.data &&
+        response.data.user &&
+        response.data.token
+      ) {
+        const { user, token } = response.data;
+        setCurrentUser(user);
   
-      setCurrentUser(user);
+        if (typeof token === 'string' && token.trim()) {
+          setToLocalStorage('token', token, TOKEN_TTL);
+        } else {
+          console.warn('Invalid or missing token:', token);
+        }
   
-      if (typeof token === 'string' && token.trim()) {
-        setToLocalStorage('token', token, TOKEN_TTL);
+        return response;
       } else {
-        console.warn('Invalid or missing token:', token);
+        throw new Error(response?.data?.message || 'Invalid login response');
       }
-
-      return response;
     } catch (err) {
       console.error('Login error:', err);
       setError(err.message || 'Login failed');
